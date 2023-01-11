@@ -1,0 +1,81 @@
+{% load bootstrap5 humanize %}
+{% load instagram_tags %}
+<div class="card my-3">
+    <div class="card-header">
+        <img src="{{ post.author.avatar_url }}" alt="None avatar" width="24px" height="24px">
+        {{ post.author.name }}
+    </div>
+    <div class="card-body">
+        <div>
+            <img src="{{ post.photo.url }}" alt="None" style="width:60%;">
+
+        </div>
+        <div class="my-3">
+            <div>
+                {% if post|is_like_user:user %}
+                    <a id="test" class="text-dark"
+                       href="{% url 'instagram:post_unlike' post.pk %}">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                {% else %}
+                    <a id="test" class="text-dark"
+                       href="{% url 'instagram:post_like' post.pk %}">
+                        <i class="fa-regular fa-heart"></i>
+                    </a>
+                {% endif %}
+            </div>
+            <div>
+                {{ post.caption }}
+                <a class="text-muted text-decoration-none" href="{{ post.get_absolute_url }}">
+                    <span class="text-muted">{{ post.created_at|naturaltime }}</span>
+                    {# created_at- instagram model의 필드 naturaltime:humanize 기능  #}
+                </a>
+            </div>
+            <div>
+                {% for tag in post.tag_set.all %}
+                    <span class="badge bg-black">#{{ tag.name }}</span>
+                {% endfor %}
+            </div>
+            <div id="-post-{{ post.pk }}-comment-list" class="my-3">
+                {% for comment in post.comment_set.all %}
+                    {% include 'instagram/_comment.html' %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    <div class="card-footer">
+        <div>
+            <form id="-post-{{ post.pk }}-comment-form" action="{% url 'instagram:comment_new' post.pk %}"
+                  method="post">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <input class="btn" type="submit" value="작성">
+            </form>
+        </div>
+        <script>
+            $(function(){
+                let form_id = '-post-{{ post.pk }}-comment-form';
+                let comment_id = '-post-{{ post.pk }}-comment-list';
+                $('#'+form_id).submit(function (e){
+                    e.preventDefault();
+
+                    let options={
+                        success: function (responseText,statusText,xhr,$form){
+                            console.group("ajaxSubmit response")
+                            console.log(responseText);
+                            console.log(statusText);
+                            console.log(xhr);
+                            console.log($form);
+                            console.groupEnd();
+                            $('#'+comment_id).prepend(responseText);
+                        }
+                    }
+                    $(this).ajaxSubmit(options);
+                })
+                console.log('document ready')
+            })
+        </script>
+
+    </div>
+</div>

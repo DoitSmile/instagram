@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <a class="btn d-grid col-sm-6 offset-3 " href="{% url 'instagram:post_new' %}" style="background-color: #f5c2c7; color: #ffffff;">새 포스팅 쓰기</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                {% for post in post_list %}
+                    {% include 'instagram/_post_card.html' %}
+                {% endfor %}
+            </div>
+            <div class="col-sm-4">
+                {% include 'instagram/timeline_sidebar.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

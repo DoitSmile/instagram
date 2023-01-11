@@ -1,0 +1,7 @@
+django-bootstrap-v5
+django-debug-toolbar
+django-extensions
+pillow
+jupyter
+django-pydenticon
+easy-thumbnails

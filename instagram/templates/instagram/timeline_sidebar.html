@@ -1,0 +1,29 @@
+<div class="d-flex p-2 my-3">
+    <div class="me-2">
+        <img class="rounded-circle" src="{{ user.avatar_url }}" alt="None" width="48px;" height="48px;">
+    </div>
+    <div class="me-2">
+        {{ user.username }}<br> {# 아이디를뜻하고  #}
+        <small class="text-muted">{{ user.name }}님</small> {# 모델에서 설정한 name class를 뜻한다. #}
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        Stories
+    </div>
+    <div class="card-body">
+        stories form people you follow will show up here.
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        Suggestions for you
+    </div>
+     <div class="card-body text-muted">
+        {% for suggested_user in suggested_user_list %}
+            {% include 'instagram/timeline_sidebar_userfollow.html' %}
+        {% endfor %}
+    </div>
+</div>

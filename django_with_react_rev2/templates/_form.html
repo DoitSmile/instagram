@@ -1,0 +1,19 @@
+{% load bootstrap5 %}
+<div class="card" style="width:40em">
+    {#    form_title이 존재한다면 card-header를 보이게하고 아니면 보이게하지않는다.#}
+    {% if form_title %}
+        <div class="card-header">
+            {{ form_title }}
+        </div>
+    {% endif %}
+
+    <div class="card-body">
+        {#                                        사진을 사용할땐 enctype="multipart/form-data"필수#}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {#                                                    submit_label이 존재한다면 submit_label를 보여주고 아니면 'Submit'을 보여줌#}
+            <input class="btn btn-primary" type="submit" value="{{ submit_label|default:'Submit' }}">
+        </form>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+{% extends 'instagram/layout.html' %}
+{% load bootstrap5 %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 offset-3">
+                {# include : 부분을 통째로 가져옴#}
+                {% include '_form.html' with form_title='새 포스팅 쓰기' submit_label='작성' %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
